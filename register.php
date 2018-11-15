@@ -6,9 +6,6 @@ if( isset($_SESSION['user']) != "") {
 	header("Location: home.php");
 }
 
-
-
-
 // DBとの接続
 include_once 'dbconnect.php';
 ?>

@@ -47,11 +47,6 @@ $result->close();
 biography：</br>
 <?php echo nl2br($biography); ?></br>
 
-<!-- <ul>
-	<li>名前：<?php echo $username; ?></li>
-	<li>メールアドレス：<?php echo $email; ?></li>
-	<li>biography：<?php echo $biography; ?></li>
-</ul> -->
 <a href="edit.php">ユーザー情報編集</a>
 <a href="logout.php?logout">ログアウト</a>
 
