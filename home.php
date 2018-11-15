@@ -20,6 +20,7 @@ if (!$result) {
 while ($row = $result->fetch_assoc()) {
 	$username = $row['username'];
 	$email = $row['email'];
+	$biography = $row['biography'];
 }
 
 // データベースの切断
@@ -31,7 +32,7 @@ $result->close();
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PHPのマイページ機能</title>
+<title>あなたのページ</title>
 <link rel="stylesheet" href="style.css">
 <!-- Bootstrap読み込み（スタイリングのため） -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
@@ -41,10 +42,11 @@ $result->close();
 <div class="col-xs-6 col-xs-offset-3">
 
 <h1>あなたのページ</h1>
-<ul>
-	<li>名前：<?php echo $username; ?></li>
-	<li>メールアドレス：<?php echo $email; ?></li>
-</ul>
+名前：<?php echo $username; ?></br>
+メールアドレス：<?php echo $email; ?></br>
+biography：</br>
+<?php echo nl2br($biography); ?></br>
+
 <a href="edit.php">ユーザー情報編集</a>
 <a href="logout.php?logout">ログアウト</a>
 
