@@ -1,9 +1,13 @@
 <?php
+ini_set('display_errors', "On");
 session_start();
 if( isset($_SESSION['user']) != "") {
 	// ログイン済みの場合はリダイレクト
 	header("Location: home.php");
 }
+
+
+
 
 // DBとの接続
 include_once 'dbconnect.php';
@@ -13,7 +17,7 @@ include_once 'dbconnect.php';
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PHPの会員登録機能</title>
+<title>登録ページ</title>
 <link rel="stylesheet" href="style.css">
 
 <!-- Bootstrap読み込み（スタイリングのため） -->

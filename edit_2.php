@@ -25,7 +25,7 @@ while ($row = $result->fetch_assoc()) {
 	$username = $row['username'];
 	$biography = $row['biography'];
 }
-
+update();
 ?>
 <!DOCTYPE HTML>
 <html lang="ja">
@@ -43,34 +43,29 @@ while ($row = $result->fetch_assoc()) {
 
 <?php
 // signupがPOSTされたときに下記を実行
-if(isset($_POST['update'])) {
+function update(){
+  if (!isset($_GET["update"])){
+    //アップロードフラグが立っていない=通常のページロード
+    return true;
+  }
 
-	$username = $mysqli->real_escape_string($_POST['username']);
+  $username = $mysqli->real_escape_string($_POST['username']);
   $biography = $mysqli->real_escape_string($_POST['biography']);
 
-	#$email = $mysqli->real_escape_string($_POST['email']);
-	#$password = $mysqli->real_escape_string($_POST['password']);
-	#$password = password_hash($password, PASSWORD_BCRYPT);
+  #$email = $mysqli->real_escape_string($_POST['email']);
+  #$password = $mysqli->real_escape_string($_POST['password']);
+  #$password = password_hash($password, PASSWORD_BCRYPT);
 
-	// POSTされた情報をDBに格納する
+  // POSTされた情報をDBに格納する
   $query = "SELECT * FROM users WHERE user_id=".$_SESSION['user']."";
   $result = $mysqli->query($query);
   while ($row = $result->fetch_assoc()) {
-  	$user_id = $row['user_id'];
+    $user_id = $row['user_id'];
   }
-
-
-
   $query = "UPDATE users SET username = '$username', biography = '$biography'  WHERE user_id= '$user_id'";
-	if($mysqli->query($query)) {  ?>
-		<div class="alert alert-success" role="alert">登録しました</div>
-		<?php } else { ?>
-		<div class="alert alert-danger" role="alert">エラーが発生しました。</div>
-		<?php
-	}
-} ?>
+}?>
 
-<form method="post" enctype="multipart/form-data">
+<form method="post" action="<?php echo basename($_SERVER['PHP_SELF']);?>?update=true" enctype="multipart/form-data">
 	<h1>更新ページ</h1>
 	<div class="form-group">
 		<input type="text" class="form-control" name="username" value="<?php echo $username ?>" placeholder="ユーザー名" required />
@@ -87,7 +82,7 @@ if(isset($_POST['update'])) {
 	<div class="form-group">
 		<input type="password" class="form-control" name="password" placeholder="パスワード" required />
 	</div> -->
-  <button type="submit" class="btn btn-default" name="update">アップデート</button>
+  <button type="submit" class="btn btn-default">アップデート</button>
   <a href="home.php">戻る</a>
 </form>
 

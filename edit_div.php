@@ -59,7 +59,15 @@ if(isset($_POST['update'])) {
   	$user_id = $row['user_id'];
   }
 
-
+  $filepath = $up_dir . $_FILES["upfile"]["name"];
+  if (move_uploaded_file($_FILES["upfile"]["tmp_name"], $filepath)) {
+    chmod($filepath, 0644);
+    print ( "ファイル\"". $_FILES["upfile"]["name"] . "\"をアップロードしました。<br><br>\n");
+    return true;
+  } else {
+    print ( "アップロードエラー：ファイルのアップロードに失敗しました<br>\n");
+    return false;
+  }
 
   $query = "UPDATE users SET username = '$username', biography = '$biography'  WHERE user_id= '$user_id'";
 	if($mysqli->query($query)) {  ?>
@@ -71,10 +79,16 @@ if(isset($_POST['update'])) {
 } ?>
 
 <form method="post" enctype="multipart/form-data">
-	<h1>更新ページ</h1>
+  <h1>更新ページ</h1>
+  <h3>ユーザーネーム</h3>
 	<div class="form-group">
 		<input type="text" class="form-control" name="username" value="<?php echo $username ?>" placeholder="ユーザー名" required />
 	</div>
+  <h3>アイコン</h3>
+  <div class="form-group">
+    <input type="file" name="upfile" size="30" />
+  </div>
+  <h3>biography</h3>
   <div class="form-group">
     <textarea class="form-control" name="biography" placeholder="biography" required  cols="50" rows="10" ><?php echo $biography ?></textarea>
   </div>
